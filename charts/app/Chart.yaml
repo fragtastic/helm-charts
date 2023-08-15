@@ -12,6 +12,6 @@ description: A generic chart for Kubernetes
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
 
-version: 0.1.0
+version: 0.1.1
 
 appVersion: ""
