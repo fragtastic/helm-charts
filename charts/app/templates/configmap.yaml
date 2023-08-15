@@ -1,0 +1,22 @@
+{{- if .Values.configMaps }}
+{{- $fullName := include "app.fullname" . -}}
+{{- $name := include "app.name" . -}}
+{{- $labels := include "app.labels" . -}}
+{{- range .Values.configMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-configmap-{{ .name }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- $labels | nindent 4 }}
+{{- with .data }}
+data:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end -}}
+{{- end -}}
