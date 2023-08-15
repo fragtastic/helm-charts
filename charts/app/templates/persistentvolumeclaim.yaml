@@ -1,0 +1,24 @@
+{{- if .Values.persistentVolumeClaims }}
+{{- $fullName := include "app.fullname" . -}}
+{{- $name := include "app.name" . -}}
+{{- $labels := include "app.labels" . -}}
+{{- range .Values.persistentVolumeClaims }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  {{- with .accessModes }}
+  accessModes:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  storageClassName: {{ .storageClassName }}
+  {{- with .resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end -}}
+{{- end -}}
